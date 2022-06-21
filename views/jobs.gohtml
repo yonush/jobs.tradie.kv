@@ -1,0 +1,138 @@
+{{define "content"}}
+<script>
+    //vanilla JS code to deal with some basic AJAX handlers
+    const xhttp = new XMLHttpRequest();
+
+    function jobNoteDetails(jobid) {
+        if (jobid == "") {
+            document.getElementById("JobDetails").innerHTML = ""
+            return
+        };
+
+        xhttp.onload = function() {
+            document.getElementById("JobDetails").innerHTML = this.responseText;
+        }
+        xhttp.open("GET", "/notes/" + jobid, true);
+        xhttp.send();
+    }
+
+    function jobsDetails(jobid) {
+        if (jobid == "") {
+            document.getElementById("JobDetails").innerHTML = ""
+            return
+        };
+
+        xhttp.onload = function() {
+            document.getElementById("JobDetails").innerHTML = this.responseText;
+        }
+        xhttp.open("GET", "/job/" + jobid, true);
+        xhttp.send();
+    }
+
+    function updJobStatus(jobid, status) {
+        if (jobid == "") return;
+
+        xhttp.onload = function() {
+            window.location.href = window.location.href;
+        }
+        xhttp.open("POST", "/job/" + jobid, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + jobid + "&stat=" + status);
+    }
+
+    function updJobNotes(jobid) {
+        if (jobid == "") return;
+
+        xhttp.onload = function() {
+            //window.location.href = window.location.href;
+        }
+        const FD = document.getElementById("notesform")
+        let formData = new FormData(FD);
+
+        xhttp.open("POST", "/notes/" + jobid, true);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(formData);
+    }
+
+    function deleteNoteRow(row) {
+        if (document.getElementById("notes-table").rows.length < 1) return;
+        let noterow = row.parentNode.parentNode.rowIndex;
+
+        let note = document.getElementById("note" + noterow.toString()).value
+        if (note.length > 0) return;
+
+        document.getElementById("notes-table").deleteRow(noterow);
+    }
+
+    function addNoteRow() {
+        let newLine = document.getElementById("notes-table").insertRow().insertCell();
+        let notes = document.getElementById("notes-table").tBodies[0].rows.length
+        let noterow = '<input type="text" class="form-control" name="note' + notes.toString() + '" id="note' + notes.toString() + '" placeholder="Enter a job note"> ';
+        noterow += '<input type="button" class="btn btn-success" onclick="deleteNoteRow(this)" value="X">';
+        newLine.innerHTML = noterow
+    }
+</script>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Tradie:Jobs Sub-system</h1>
+        <p>This page lets you update an existing job.</p>
+    </div>
+    <h2>
+        <a href="/">Home</a>
+    </h2>
+</div>
+
+<div class="container">
+
+    <span>Click on a column heading to sort by the column attribute.</span></br>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col"><a href="/jobs/0/{{- .Filter}}">Job id</a></th>
+                <th scope="col"><a href="/jobs/1/{{- .Filter}}">Name</a></th>
+                <th scope="col"><a href="/jobs/2/{{- .Filter}}">Status</a></th>
+                <th scope="col">Detail</th>
+                <th scope="col">Update Status & Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Jobitems}}
+            <tr>
+                <th scope="row">{{.Jobid}}</td>
+                    <td>{{.Name.First}}&nbsp;{{.Name.Last}}</td>
+                    <td> {{.Status}}</td>
+                    <td><button type="button" class="btn btn-info" onclick="jobsDetails({{.Jobid}})">Detail</button>
+                    </td>
+                    <td>
+
+                        <form action="/jobs" class="form-inline">
+                            <select class="custom-select my-1 mr-sm-2" id="status{{.Jobid}}" onchange="updJobStatus({{.Jobid}}, document.getElementById('status{{.Jobid}}').value)">
+                             <option selected>Choose...</option>
+                            <option value="s">scheduled</option>
+                            <option value="a">active</option>
+                            <option value="i">invoicing</option>
+                            <option value="t">to priced</option>
+                            <option value="c">completed</option>
+                            </select>
+                            <button type="button" class="btn btn-info" onclick="jobNoteDetails({{.Jobid}})">Job Notes</button>
+                        </form>
+                    </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <span>Filter on status: <a href="/jobs/{{- .Sort}}">None</a> - 
+            <a href="/jobs/{{- .Sort}}/s">scheduled</a> -
+            <a href="/jobs/{{- .Sort}}/a">active</a> - 
+            <a href="/jobs/{{- .Sort}}/i">invoicing</a> - 
+            <a href="/jobs/{{- .Sort}}/t">to priced</a> - 
+            <a href="/jobs/{{- .Sort}}/c">completed</a>
+            
+        </span>
+    <div id="JobDetails"></div>
+
+
+</div>
+{{end}}

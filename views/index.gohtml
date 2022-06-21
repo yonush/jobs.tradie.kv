@@ -1,0 +1,55 @@
+{{define "bootstrap"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tradie App: Jobs sub-system </title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        {{template "content" .}}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+</body>
+
+</html>
+{{end}} {{define "content"}}
+<div class="container">
+    <div class="jumbotron">
+        <h1>Developer Technical Test</h1>
+        <p>This partial application was created to present to a technical team for review.</p>
+        <h3>Features:</h3>
+        The software is able to
+        <ul>
+            <li>Filter and sort the list of jobs</li>
+            <li>View a jobs details and add/edit notes for selected job</li>
+            <li>Change the status of a job</li>
+            <li>be considered immune to SQL injection :)</li>
+        </ul>
+        The application is a standalone demo requiring no additional WAMP/LAMP dependencies. It has been built and tested on Windows and WSL:Ubuntu. If the application requires rebuilding, there are two batch files provided. The rebuild assumes there is an existing
+        Go installation on the host computer. The provided batch files will download the required 3rd party packages for the build process.
+
+        <h3>Limitations & considerations:</h3>
+        Being a partial application, there are some missing features and design decisions applied;
+        <ul>
+            <li>Unit tests have not been included</li>
+            <li>No HTTPS support</li>
+            <li>No CSRF or XSS protection</li>
+            <li>A non relational database was used for the datastore.</li>
+            <li>Plain JavaScript and bootstrap</li>
+            <li>No session or cookies</li>
+            <li>Rudimentary sanitization and validation conducted on HTTP request & form variables </li>
+        </ul>
+
+        <h2>
+            <a href="/jobs">Job notes & status demo</a>
+        </h2>
+    </div>
+</div>
+{{end}}

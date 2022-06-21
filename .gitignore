@@ -1,0 +1,6 @@
+vendor
+.vscode
+debug*
+/data/jobs/*
+/tmp
+*.exe
