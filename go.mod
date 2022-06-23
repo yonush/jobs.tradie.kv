@@ -1,10 +1,10 @@
-module fergus.tradie
+module jobs.tradie
 
 go 1.18
 
 require (
 	github.com/gorilla/mux v1.8.0
-	github.com/ostafen/clover v1.0.1
+	github.com/ostafen/clover v1.2.0
 )
 
 require (
@@ -23,6 +23,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
 	go.opencensus.io v0.22.5 // indirect
-	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
-	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
+	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
+	golang.org/x/sys v0.0.0-20211019181941-9d821ace8654 // indirect
 )
