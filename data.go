@@ -25,7 +25,7 @@ type Jobs struct {
 	Notes   []string `json:"notes,omitempty"`
 }
 
-//import the JSON data into a collection
+// import the JSON data into a collection
 func loadFromJson(filename string) error {
 	objects := make([]map[string]interface{}, 0)
 	data, err := ioutil.ReadFile(filename)
